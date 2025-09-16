@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Hacker mode 😈</title>
+  <style>
+    body {
+      background: black;
+      color: #00ff00;
+      font-family: monospace;
+      white-space: pre;
+      font-size: 18px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+<pre id="output"></pre>
+
+<script>
+const text = [
+Nhìn con cặc<3
+];
+
+let i = 0;
+function showLine() {
+  if (i < text.length) {
+    document.getElementById("output").textContent += text[i] + "\n";
+    i++;
+    setTimeout(showLine, 1500);
+  }
+}
+showLine();
+</script>
+</body>
+</html>
