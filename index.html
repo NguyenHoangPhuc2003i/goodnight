@@ -1,9 +1,8 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
-  <title>Goodnight NoRa 💖</title>
+  <title>Goodnight Nhaaaaa Bae❤️✨</title>
   <style>
     body {
       margin: 0;
@@ -15,49 +14,67 @@
       overflow: hidden;
       font-family: Arial, sans-serif;
     }
+
     h1 {
-      position: absolute;
-      top: 20%;
       color: white;
-      font-size: 50px;
+      font-size: 60px;
       text-shadow: 2px 2px 5px #00000055;
+      border-right: 3px solid rgba(255,255,255,.75);
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      animation: typing 4s steps(30, end), blink .7s step-end infinite;
     }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
     .heart {
       position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      transform: rotate(45deg);
-      animation: float 5s linear infinite;
+      color: red;
+      font-size: 20px;
+      animation: float 5s infinite;
     }
-    .heart::before, .heart::after {
-      content: "";
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: red;
-      border-radius: 50%;
-    }
-    .heart::before { top: -10px; left: 0; }
-    .heart::after { left: -10px; top: 0; }
+
     @keyframes float {
-      0% { transform: translateY(100vh) rotate(45deg); opacity: 1; }
-      100% { transform: translateY(-20vh) rotate(45deg); opacity: 0; }
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-800px) scale(1.5); opacity: 0; }
     }
   </style>
 </head>
 <body>
-  <h1>Goodnight NoRa bot 💖</h1>
+  <h1>Goodnight Nhaaaaa Bae❤️✨</h1>
+
+  <!-- Trái tim bay -->
   <script>
     function createHeart() {
       const heart = document.createElement("div");
       heart.className = "heart";
+      heart.innerHTML = "❤";
       heart.style.left = Math.random() * 100 + "vw";
-      heart.style.animationDuration = (3 + Math.random() * 2) + "s";
+      heart.style.top = "100vh";
+      heart.style.fontSize = Math.random() * 20 + 15 + "px";
       document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
+
+      setTimeout(() => { heart.remove(); }, 5000);
     }
-    setInterval(createHeart, 300);
+    setInterval(createHeart, 500);
   </script>
+
+  <!-- Nhạc nền -->
+ <!-- Nhạc nền từ YouTube -->
+<!-- Nhạc nền từ YouTube -->
+<iframe width="0" height="0"
+    src="https://www.youtube.com/embed/Bgm9Px7m5Qk?autoplay=1&loop=1&playlist=Bgm9Px7m5Qk"
+    frameborder="0" allow="autoplay">
+</iframe>
+
+
 </body>
 </html>
