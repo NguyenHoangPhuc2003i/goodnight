@@ -1,80 +1,67 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8">
-  <title>Goodnight Nhaaaaa Bae❤️✨</title>
+  <meta charset="UTF-8" />
+  <title>Goodnight ❤️✨</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(to right, #ff9a9e, #fad0c4);
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-
-    h1 {
-      color: white;
-      font-size: 60px;
-      text-shadow: 2px 2px 5px #00000055;
-      border-right: 3px solid rgba(255,255,255,.75);
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-      animation: typing 4s steps(30, end), blink .7s step-end infinite;
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink {
-      50% { border-color: transparent }
-    }
-
-    .heart {
-      position: absolute;
-      color: red;
-      font-size: 20px;
-      animation: float 5s infinite;
-    }
-
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); opacity: 1; }
-      100% { transform: translateY(-800px) scale(1.5); opacity: 0; }
-    }
+    body{margin:0;height:100vh;overflow:hidden;display:flex;justify-content:center;align-items:center;
+      background:linear-gradient(90deg,#ff9a9e,#fad0c4);font-family:system-ui,Segoe UI,Roboto,Arial}
+    h1{position:absolute;top:15%;color:#fff;font-size:clamp(28px,6vw,56px);text-shadow:0 0 10px #0005;
+      border-right:3px solid rgba(255,255,255,.8);white-space:nowrap;overflow:hidden;width:0;
+      animation:typing 4s steps(30,end) forwards,blink .7s step-end infinite}
+    @keyframes typing{to{width:100%}} @keyframes blink{50%{border-color:transparent}}
+    .heart{position:absolute;color:#ff2965;font-size:22px;animation:fly var(--dur) linear forwards;
+      filter:drop-shadow(0 0 6px rgba(255,64,129,.4))}
+    @keyframes fly{0%{transform:translate(var(--x),110vh) scale(var(--s));opacity:0}
+      10%{opacity:1}100%{transform:translate(calc(var(--x)+var(--dx)),-15vh) scale(calc(var(--s)*.8));
+      opacity:0}}
+    #unmute{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);padding:12px 18px;border:0;
+      border-radius:999px;background:#ffffffcc;backdrop-filter:blur(6px);color:#111;font-weight:600;
+      box-shadow:0 8px 24px #0003;cursor:pointer}
+    #unmute.hide{display:none}
   </style>
 </head>
 <body>
-  <h1>Goodnight Nhaaaaa Bae❤️✨</h1>
+  <h1>Goodnight ❤️✨</h1>
 
-  <!-- Trái tim bay -->
+  <!-- Tim bay -->
   <script>
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.className = "heart";
-      heart.innerHTML = "❤";
-      heart.style.left = Math.random() * 100 + "vw";
-      heart.style.top = "100vh";
-      heart.style.fontSize = Math.random() * 20 + 15 + "px";
-      document.body.appendChild(heart);
-
-      setTimeout(() => { heart.remove(); }, 5000);
+    const EMOJIS=["❤️","💖","💗","💓","💘","🩷","💞","💕"];
+    function spawn(){
+      const h=document.createElement("div");h.className="heart";
+      h.textContent=EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+      const x=Math.random()*100, dx=(Math.random()*30-15)+"vw";
+      const s=(.7+Math.random()*1.3).toFixed(2), dur=(3+Math.random()*4).toFixed(2)+"s";
+      h.style.setProperty("--x",x+"vw");h.style.setProperty("--dx",dx);
+      h.style.setProperty("--s",s);h.style.setProperty("--dur",dur);
+      document.body.appendChild(h); setTimeout(()=>h.remove(),parseFloat(dur)*1000);
     }
-    setInterval(createHeart, 500);
+    setInterval(spawn,180); for(let i=0;i<15;i++) setTimeout(spawn,i*120);
   </script>
 
-  <!-- Nhạc nền -->
- <!-- Nhạc nền từ YouTube -->
-<!-- Nhạc nền từ YouTube -->
-<iframe width="0" height="0"
-    src="https://www.youtube.com/embed/Bgm9Px7m5Qk?autoplay=1&loop=1&playlist=Bgm9Px7m5Qk"
-    frameborder="0" allow="autoplay">
-</iframe>
+  <!-- Nút bật nhạc -->
+  <button id="unmute">🔊 Chạm để bật nhạc</button>
 
-
+  <!-- YouTube (autoplay mute). Thay ID dưới bằng ID video của bạn -->
+  <div id="yt-holder" style="width:0;height:0;overflow:hidden;"></div>
+  <script>
+    const YT_ID = "Bgm9Px7m5Qk"; // <== thay bằng ID của bạn nếu cần
+    // Tải API
+    const tag=document.createElement('script'); tag.src="https://www.youtube.com/iframe_api";
+    document.head.appendChild(tag);
+    let player;
+    window.onYouTubeIframeAPIReady=function(){
+      player=new YT.Player('yt-holder',{height:'0',width:'0',videoId:YT_ID,
+        playerVars:{autoplay:1,controls:0,loop:1,playlist:YT_ID,playsinline:1,origin:location.origin},
+        events:{'onReady':(e)=>{e.target.mute(); e.target.playVideo();}}
+      });
+    };
+    // Bấm để bật tiếng
+    document.getElementById('unmute').addEventListener('click',()=>{
+      if(player){ player.unMute(); player.setVolume(100); }
+      document.getElementById('unmute').classList.add('hide');
+    });
+  </script>
 </body>
 </html>
