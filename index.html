@@ -3,122 +3,204 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Phuc sieu dethuong❤️✨</title>
+  <title>Pink Hearts — Goodnight</title>
   <style>
-    body {
-      margin:0; height:100vh; overflow:hidden;
-      background: radial-gradient(1000px at 50% 20%, #131a2a, #0b0f1a);
-      font-family: system-ui,Segoe UI,Roboto,Arial; color:#fff;
+    :root{
+      --bg1:#ffd1dc;  /* hồng nhạt */
+      --bg2:#ff9bb3;  /* hồng đậm */
+      --text:#fff;
+      --glow:#ff5a8a;
     }
-    .wrap{position:relative;height:100%;display:grid;place-items:center}
-    .typing{font-size:clamp(28px,6vw,56px);text-align:center;
-      white-space:nowrap;overflow:hidden;border-right:3px solid #fff;
-      width:0;text-shadow:0 0 12px #ff4d8d,0 0 30px #ff4d8d}
-    @keyframes typing{from{width:0}to{width:100%}}
-    @keyframes caret{50%{border-color:transparent}}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0}
+    body{
+      background: radial-gradient(1100px 800px at 50% 15%, var(--bg1), var(--bg2));
+      overflow:hidden; font-family: system-ui,-apple-system,"Segoe UI",Roboto,Arial;
+      color:var(--text);
+    }
 
-    .heart{position:fixed;width:22px;height:22px;transform:rotate(45deg);
-      background:#ff2e63;filter:drop-shadow(0 0 8px #ff2e63aa)}
-    .heart:before,.heart:after{content:"";position:absolute;width:22px;height:22px;border-radius:50%;
-      background:inherit;left:-11px;top:0}
-    .heart:after{left:0;top:-11px}
-    .trail{position:fixed;width:120px;height:2px;
-      background:linear-gradient(90deg,#0000,#ff2e63aa,#0000);opacity:.7}
+    /* nền lấp lánh nhẹ */
+    .sparkle,.sparkle:after{
+      position:fixed; inset:-200px; content:""; pointer-events:none;
+      background:
+        radial-gradient(2px 2px at 20% 30%, #fff4 80%, transparent 81%) repeat,
+        radial-gradient(1.5px 1.5px at 70% 60%, #fff3 80%, transparent 81%) repeat,
+        radial-gradient(1px 1px at 40% 80%, #fff3 80%, transparent 81%) repeat;
+      background-size: 520px 520px, 640px 640px, 760px 760px;
+      animation: floatBg 28s linear infinite;
+      filter: blur(.3px);
+    }
+    .sparkle:after{ animation-duration: 40s; opacity:.8 }
+    @keyframes floatBg{ from{transform:translateY(0)} to{transform:translateY(-220px)} }
 
-    #unmute{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);
-      padding:12px 18px;border:0;border-radius:999px;background:#ffffff14;color:#fff;
-      font-weight:700;backdrop-filter:blur(8px);box-shadow:0 10px 30px #0007;cursor:pointer}
-    #unmute.hide{display:none}
+    /* lớp yêu cầu xoay ngang */
+    .rotate-overlay{
+      position:fixed; inset:0; display:none; align-items:center; justify-content:center;
+      text-align:center; padding:24px; background:#0008; color:#fff; z-index:9999;
+    }
+    .rotate-overlay .box{
+      padding:20px 24px; border-radius:16px; background:#0006; border:1px solid #ffffff44;
+      backdrop-filter: blur(8px); box-shadow:0 10px 40px #0006;
+    }
+    .rotate-overlay h2{margin:0 0 8px}
+    .rotate-overlay p{margin:0; opacity:.9}
+    @media (orientation:portrait){
+      .rotate-overlay{ display:flex }
+      .content{ filter: blur(3px); }
+    }
 
-    /* Đếm ngược */
-    #countdown{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-      font-size:80px;font-weight:bold;background:#000d;z-index:9999;animation:fadeout 1s linear 3s forwards}
-    @keyframes fadeout{to{opacity:0;visibility:hidden}}
+    /* vùng nội dung */
+    .content{position:relative; height:100%; display:grid; place-items:center}
+
+    /* chữ typing (loop) */
+    #title{
+      max-width:92vw;
+      white-space:nowrap; overflow:hidden; border-right:3px solid rgba(255,255,255,.85);
+      font-size:clamp(30px, 7vw, 64px);
+      text-shadow:0 0 10px var(--glow), 0 0 30px var(--glow);
+    }
+
+    /* nút nhạc */
+    #musicBtn{
+      position:fixed; left:50%; bottom:20px; transform:translateX(-50%);
+      padding:12px 18px; border:0; border-radius:999px; font-weight:700;
+      background:#ffffffd0; color:#c4145a; cursor:pointer;
+      box-shadow:0 10px 26px #c4145a55; backdrop-filter: blur(8px);
+    }
+
+    /* trái tim “chíu chíu” lớn hơn + vệt sáng */
+    .heart{
+      position:fixed; width:34px; height:34px; transform:rotate(45deg);
+      background:#ff2e63; filter: drop-shadow(0 0 10px #ff2e63aa) saturate(1.2);
+      will-change: transform, opacity;
+    }
+    .heart:before,.heart:after{
+      content:""; position:absolute; width:34px; height:34px; border-radius:50%;
+      background:inherit; left:-17px; top:0;
+    }
+    .heart:after{ left:0; top:-17px }
+    .trail{
+      position:fixed; width:140px; height:3px;
+      background:linear-gradient(90deg, #0000, #ff2e63aa, #0000);
+      filter: blur(1px); opacity:.8; transform-origin:left center;
+      will-change: transform, opacity, width;
+    }
   </style>
 </head>
 <body>
-  <div id="countdown">3</div>
-  <div class="wrap">
-    <div id="title" class="typing"></div>
+  <div class="sparkle"></div>
+
+  <!-- lớp yêu cầu xoay ngang -->
+  <div class="rotate-overlay">
+    <div class="box">
+      <h2>🔁 Vui lòng xoay ngang (Landscape)</h2>
+      <p>Để cảm nhận trọn vẹn nhé!!! ❤️</p>
+    </div>
   </div>
 
-  <button id="unmute">🔊 Chạm để bật nhạc</button>
-  <div id="yt-holder" style="width:0;height:0;overflow:hidden;"></div>
+  <div class="content">
+    <div id="title"></div>
+  </div>
+
+  <!-- audio MP3 trực tiếp: đáng tin hơn YouTube -->
+  <audio id="bgm" preload="auto" loop>
+    <!-- Thay link MP3 tại đây nếu muốn -->
+    <source src="https://cdn.pixabay.com/download/audio/2024/01/09/audio_19e1b8b2c2.mp3?filename=soft-piano-ambient-169038.mp3" type="audio/mpeg">
+  </audio>
+  <button id="musicBtn">🔊 Bật nhạc</button>
 
   <script>
-    const MESSAGE = "Chúc em bé ngủ ngon, mơ đẹp nhaaa 💖";   // 👉 sửa ở đây để đổi nội dung mặc định
-    const YT_ID   = "Bgm9Px7m5Qk";        // 👉 đổi ID video YouTube nếu muốn
+    /* ========= Cấu hình nhanh ========= */
+    // Nhập message mặc định ở đây (sẽ bị override nếu có ?msg= trên URL)
+    const DEFAULT_MSG = "Chúc em bé ngủ ngon 💖";
+    // tốc độ gõ & giữ
+    const TYPE_SPEED = 55;       // ms mỗi ký tự
+    const HOLD_FULL  = 1500;     // dừng khi gõ xong
+    const ERASE_SPEED= 40;       // xóa nhanh hơn
+    const HOLD_EMPTY = 400;      // dừng khi xóa hết
 
-    // Countdown logic
-    let c = 3;
-    const cd = document.getElementById("countdown");
-    const interval = setInterval(()=>{
-      c--; cd.textContent=c;
-      if(c===0){ clearInterval(interval); cd.textContent="1"; }
-      if(c<1){ cd.remove(); startShow(); }
-    },1000);
+    // Cho phép đặt nội dung qua URL: ?msg=...
+    const params = new URLSearchParams(location.search);
+    const MESSAGE = params.get("msg") || DEFAULT_MSG;
 
-    function startShow(){
-      // typing effect
-      const t = document.getElementById("title");
-      t.textContent = MESSAGE;
-      t.classList.add("typing");
-      t.style.animation = "typing 4s steps(40,end) forwards, caret .8s step-end infinite";
-
-      // start hearts
-      let left = true;
-      setInterval(()=>{ shootHeart(left); left=!left; },260);
-
-      // init youtube
-      loadYouTube();
+    /* ========= Typing loop ========= */
+    const title = document.getElementById("title");
+    function typeLoop(text){
+      let i = 0, dir = 1; // 1: typing, -1: erasing
+      function tick(){
+        title.textContent = text.slice(0, i);
+        title.style.borderRight = "3px solid rgba(255,255,255,.85)";
+        if (dir === 1) {
+          if (i < text.length){ i++; setTimeout(tick, TYPE_SPEED); }
+          else { title.style.borderRight = "3px solid transparent"; setTimeout(()=>{ dir = -1; tick(); }, HOLD_FULL); }
+        } else {
+          if (i > 0){ i--; setTimeout(tick, ERASE_SPEED); }
+          else { title.style.borderRight = "3px solid rgba(255,255,255,.85)"; setTimeout(()=>{ dir = 1; tick(); }, HOLD_EMPTY); }
+        }
+      }
+      tick();
     }
+    typeLoop(MESSAGE);
 
-    // Heart shooting
-    function shootHeart(fromLeft){
-      const startX = fromLeft?-20:innerWidth+20;
-      const startY = innerHeight+20;
-      const endX   = fromLeft? innerWidth*0.8 : innerWidth*0.2;
-      const endY   = innerHeight*0.15+Math.random()*100;
-      const angle = Math.atan2(endY-startY,endX-startX);
-      const dist  = Math.hypot(endX-startX,endY-startY);
-      const dur=1200+Math.random()*800;
+    /* ========= Trái tim “chíu chíu” ========= */
+    function shootHeart(fromLeft=true){
+      const startX = fromLeft ? -30 : innerWidth + 30;
+      const startY = innerHeight + 30;
+      const endX   = fromLeft ? innerWidth*0.8 + Math.random()*100 : innerWidth*0.2 - Math.random()*100;
+      const endY   = innerHeight*0.18 + Math.random()*140;
 
-      const trail=document.createElement('div');
-      trail.className="trail"; trail.style.left=(fromLeft?startX:endX)+"px";
-      trail.style.top=(fromLeft?startY:endY)+"px";
-      trail.style.transform=`rotate(${angle*180/Math.PI}deg)`;
+      const angle = Math.atan2(endY - startY, endX - startX);
+      const dur   = 1200 + Math.random()*900; // ms
+
+      const trail = document.createElement('div');
+      trail.className = 'trail';
+      trail.style.left = (fromLeft ? startX : endX) + "px";
+      trail.style.top  = (fromLeft ? startY : endY) + "px";
+      trail.style.transform = `rotate(${angle*180/Math.PI}deg)`;
       document.body.appendChild(trail);
 
-      const heart=document.createElement('div'); heart.className="heart";
+      const heart = document.createElement('div');
+      heart.className = 'heart';
       document.body.appendChild(heart);
 
-      const t0=performance.now();
+      const t0 = performance.now();
       function anim(t){
-        const p=Math.min(1,(t-t0)/dur);
-        const x=startX+(endX-startX)*p, y=startY+(endY-startY)*p;
-        heart.style.transform=`translate(${x}px,${y}px) rotate(45deg) scale(${1+p*0.2})`;
-        trail.style.width=80+p*140+"px"; trail.style.opacity=(1-p)*0.9;
-        if(p<1) requestAnimationFrame(anim); else{heart.remove();trail.remove();}
+        const p = Math.min(1, (t - t0) / dur);
+        const x = startX + (endX - startX) * p;
+        const y = startY + (endY - startY) * p;
+        heart.style.transform = `translate(${x}px,${y}px) rotate(45deg) scale(${1 + p*0.25})`;
+        trail.style.width = 110 + p*170 + "px";
+        trail.style.opacity = (1 - p) * 0.9;
+        if (p < 1) requestAnimationFrame(anim);
+        else { heart.remove(); trail.remove(); }
       }
       requestAnimationFrame(anim);
     }
+    let fromLeft = true;
+    setInterval(()=>{ shootHeart(fromLeft); fromLeft = !fromLeft; }, 260);
 
-    // YouTube embed
-    function loadYouTube(){
-      const tag=document.createElement('script');
-      tag.src="https://www.youtube.com/iframe_api"; document.head.appendChild(tag);
+    /* ========= Nhạc: cần thao tác người dùng ========= */
+    const audio   = document.getElementById('bgm');
+    const btn     = document.getElementById('musicBtn');
+    let playing   = false;
+
+    function updateBtn(){ btn.textContent = playing ? "⏸ Tắt nhạc" : "🔊 Bật nhạc"; }
+    updateBtn();
+
+    function tryPlay(){
+      audio.play().then(()=>{ playing = true; updateBtn(); })
+      .catch(()=>{ playing = false; updateBtn(); /* nếu bị chặn, chờ bấm lần nữa */});
     }
-    let player;
-    window.onYouTubeIframeAPIReady=function(){
-      player=new YT.Player('yt-holder',{height:'0',width:'0',videoId:YT_ID,
-        playerVars:{autoplay:1,controls:0,loop:1,playlist:YT_ID,playsinline:1,origin:location.origin},
-        events:{'onReady':(e)=>{e.target.mute(); e.target.playVideo();}}
-      });
-    };
-    document.getElementById('unmute').addEventListener('click',()=>{
-      if(player){player.unMute();player.setVolume(100);}
-      document.getElementById('unmute').classList.add('hide');
-    });
+
+    // lần chạm đầu tiên sẽ play (mobile yêu cầu gesture)
+    btn.addEventListener('click', ()=>{
+      if (!playing) tryPlay(); else { audio.pause(); playing = false; updateBtn(); }
+    }, {passive:true});
+
+    // iOS đôi khi cần 'touchstart' mới kích hoạt
+    window.addEventListener('touchstart', ()=>{}, {passive:true});
   </script>
 </body>
+
+<!-- LỚP YÊU CẦU XOAY NGANG: chỉ hiển thị qua CSS @media (orientation:portrait) -->
 </html>
